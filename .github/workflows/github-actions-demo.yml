@@ -1,0 +1,36 @@
+name: Droplet Website
+run-name: Deploying website for Daily News Pages
+on: [push]
+
+env:
+  DOTNET_VERSION: '7.0.306' # The .NET SDK version to use
+
+jobs:
+  Droplet-Droplet-Root:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+              
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: |        
+          dotnet build dailynews.page.csproj --configuration Release --no-restore
+          dotnet publish dailynews.page.csproj -c Release -r linux-x64 --self-contained true
+                     
+      - name: Deploy
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DROPLET_KEY_SECRET }}
+          ARGS: "-rlgoDzvc -i"
+          SOURCE: "./bin/Release/net7.0/linux-x64/publish/"
+          REMOTE_HOST: ${{ secrets.DROPLET_HOST_SECRET}}
+          REMOTE_USER: ${{ secrets.DROPLET_USERNAME_SECRET }}
+          TARGET: /var/www/dailynews.page
