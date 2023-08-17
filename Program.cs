@@ -20,6 +20,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Host ASP.NET Core on Linux with Nginx | Microsoft Learn
+// https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-7.0&tabs=linux-ubuntu
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
