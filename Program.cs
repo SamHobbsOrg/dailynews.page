@@ -5,6 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Host ASP.NET Core on Linux with Nginx | Microsoft Learn
+// https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-7.0&tabs=linux-ubuntu
+builder.Services.AddAuthentication();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
