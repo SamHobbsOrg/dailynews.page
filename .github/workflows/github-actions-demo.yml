@@ -24,6 +24,7 @@ jobs:
         run: |        
           dotnet build dailynews.page.csproj --configuration Release --no-restore
           dotnet publish dailynews.page.csproj -c Release -r linux-x64 --self-contained false
+          ls ./bin/Release/net7.0/linux-x64/publish/
                      
       - name: Deploy
         uses: easingthemes/ssh-deploy@main
