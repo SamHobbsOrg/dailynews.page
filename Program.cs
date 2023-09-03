@@ -26,7 +26,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// .NETCore Kestrel HTTPs 502 Bad Gateway nginx with port forwarding · community · Discussion #7116
+// https://github.com/orgs/community/discussions/7116
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
